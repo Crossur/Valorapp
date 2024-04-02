@@ -8,20 +8,6 @@ module.exports = {
     filename:'bundle.js'
   },
   mode:'development',
-  // resolve:{
-  //   fallback:{
-  //     'path':require.resolve('path-browserify'),
-  //     'util':require.resolve('util/'),
-  //     "stream": require.resolve("stream-browserify"),
-  //     "buffer": require.resolve("buffer/"),
-  //     "querystring": require.resolve("querystring-es3"),
-  //     "http": require.resolve("stream-http"),
-  //     "crypto": require.resolve("crypto-browserify"),
-  //     "zlib": require.resolve("browserify-zlib"),
-  //     "assert": require.resolve("assert/"),
-  //     "vm": require.resolve("vm-browserify")
-  //   }
-  //},
   module:{
     rules:[
       {
@@ -41,7 +27,9 @@ module.exports = {
       directory:path.resolve(__dirname,'build'),
       publicPath:'/build'
     },
-    proxy:[{context:['/'],target:'http://localhost:3000'}],
+    proxy:{
+      '/':{target:'http://localhost:8080'}
+    }
   },
   plugins:[
     new HtmlWebpackPlugin({
