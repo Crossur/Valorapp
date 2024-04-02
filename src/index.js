@@ -1,7 +1,12 @@
 import React from 'react';
-import { createRoot } from 'react-dom/client'
-import { render } from 'react-dom';
 import App from '../Components/App';
+import { ReactDOM } from 'react';
+import { BrowserRouter } from 'react-router-dom';
 import Login from '../Components/Login';
-const root = createRoot(document.getElementById('test'));
-root.render(<Login/>);
+ReactDOM.createRoot(document.getElementById('root')).render(
+    <React.StrictMode>
+    <BrowserRouter>
+        <Login />
+    </BrowserRouter>
+</React.StrictMode>
+);

@@ -2,6 +2,7 @@ const express = require('express');
 const app = express();
 const path = require('path');
 app.get('/',(req,res)=>{
-    res.send(200).sendFile(path.resolve(__dirname,'index.html'))
+    res.sendFile(path.resolve(__dirname,'./build','index.html'));
 })
-app.listen(300);
+console.log(path.resolve(__dirname,'./build','index.html'));
+app.listen(3000);
