@@ -43,7 +43,6 @@ module.exports = {
       template: 'index.html',
     }),
     new NodePolyfillPlugin(),
-    new webpack.IgnorePlugin({'/^pg-native$/':/^dns$/}),
   ],
   resolve: {
     // Enable importing JS / JSX files without specifying their extension
