@@ -1,13 +1,12 @@
 import React from 'react';
-import Login from '../Components/Login.jsx';
+import LogOrSign from './LogOrSign.jsx';
 import Test from '../Components/Test.jsx';
-import {Routes, Route, Switch} from 'react-router-dom';
+import {Routes, Route, Switch, BrowserRouter} from 'react-router-dom';
 const App = () =>{
     return(
-        <Routes>
-            <Route path='/' element={<Login />}></Route>
-            <Route path ='/Login' element = {<Test />}></Route>
-        </Routes>
+        <BrowserRouter>
+         <LogOrSign/>
+        </BrowserRouter>
     )
 }
 export default App;

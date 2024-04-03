@@ -8,7 +8,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js",
     "build": "webpack",
-    "dev": "webpack server --open"
+    "devServer": "webpack server  --open",
+    "dev": "npm run devServer & npm run start"
   },
   "repository": {
     "type": "git",
@@ -24,12 +25,14 @@
     "assert": "^2.1.0",
     "browserify-zlib": "^0.2.0",
     "buffer": "^6.0.3",
+    "cookie-parser": "^1.4.6",
     "crypto-browserify": "^3.12.0",
     "express": "^4.19.2",
     "fs": "^0.0.1-security",
     "node": "^18.20.0",
     "node-fetch": "^3.3.2",
     "path-browserify": "^1.0.1",
+    "pg": "^8.11.5",
     "querystring-es3": "^0.2.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
@@ -51,6 +54,8 @@
     "css-loader": "^6.10.0",
     "file-loader": "^6.2.0",
     "html-webpack-plugin": "^5.6.0",
+    "libq": "^0.0.8",
+    "node-polyfill-webpack-plugin": "^3.0.0",
     "nodemon": "^3.1.0",
     "style-loader": "^3.3.4",
     "webpack": "^5.91.0",
