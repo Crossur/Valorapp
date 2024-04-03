@@ -5,7 +5,7 @@ import {Routes, Route, Switch, BrowserRouter} from 'react-router-dom';
 const App = () =>{
     return(
         <BrowserRouter>
-         <LogOrSign/>
+            <LogOrSign/>
         </BrowserRouter>
     )
 }
