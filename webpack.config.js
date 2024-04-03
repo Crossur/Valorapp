@@ -27,9 +27,9 @@ module.exports = {
       directory:path.resolve(__dirname,'build'),
       publicPath:'/build'
     },
-    proxy:{
-      '/':{target:'http://localhost:8080'}
-    }
+    // proxy:{
+    //   '/':{target:'http://localhost:8080'}
+    // }
   },
   plugins:[
     new HtmlWebpackPlugin({
