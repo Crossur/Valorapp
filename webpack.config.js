@@ -21,7 +21,8 @@ module.exports = {
     hot: true,
     headers: { 'Access-Control-Allow-Origin': '*' },
     proxy:{
-      '/':{target:'http://localhost:3000',secure:false}
+      '/':{target:'http://localhost:3000',secure:false},
+      '/Login':{target:'http://localhost:3000',secure:false}
     }
   },
   module: {

@@ -9,7 +9,7 @@
     "start": "node server.js",
     "build": "webpack",
     "devServer": "webpack server  --open",
-    "dev": "npm run devServer & npm run start"
+    "dev": "npm run build & npm run devServer & npm run start"
   },
   "repository": {
     "type": "git",
