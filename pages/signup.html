@@ -1,0 +1,21 @@
+<html>
+    <head>
+        <div>Sign up
+            <div>Username<input id="usernameS"></input></div>
+            <div>Password <input id = 'passwordS'></input></div>
+            <button onclick="
+             async function hello(){
+                const data = await fetch('/addUser',{
+                    method:'POST',
+                    body:JSON.stringify({
+                        'username':document.getElementById('usernameS').value,
+                        'password':document.getElementById('passwordS').value
+                    }),
+                    headers: { 'Content-Type': 'application/json' }
+                });
+                location.assign('/Home')
+            }
+            hello()
+            ">Submit</button>
+    </head>
+</html>

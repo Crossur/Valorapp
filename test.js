@@ -5,7 +5,7 @@ test.save = (user,pass)=>{
     password=pass;
     console.log(user,pass);
 }
-test.getUser = async(req,res,next)=>{
+test.checkUser = async(req,res,next)=>{
     let pass = false;
     //console.log(req.body);
     const data = await db.query(
@@ -22,11 +22,13 @@ test.getUser = async(req,res,next)=>{
     }
     return next();
 }
-test.signup = async(req,res,next)=>{
+test.addUser = async(req,res,next)=>{
+    console.log('body',req.body);
     const data = await db.query(
         `INSERT into users
         VALUES('${req.body.username}','${req.body.password}')
         `
     );
+    return next();
 }
 module.exports = test;
