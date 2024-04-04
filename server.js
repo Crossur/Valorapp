@@ -15,6 +15,9 @@ app.use(cookieParser());
 app.get('/');
 app.get('/Login',test.getUser,(req,res)=>{
     res.cookie('signed in',true);
-    return res.status(200).sendFile(path.resolve(__dirname,'components','Test.jsx'));
+    return res.status(200).sendFile(path.resolve(__dirname,'Components','Test.jsx'));
+})
+app.post('/Login',test.getUser,(req,res)=>{
+    
 })
 app.listen(3000);

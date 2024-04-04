@@ -1,17 +1,22 @@
 const db = require('./database');
 const test = {};
-let username;
-let password;
 test.save = (user,pass)=>{
     username=user;
     password=pass;
     console.log(user,pass);
 }
 test.getUser = async(req,res,next)=>{
-    const data = await db.query(`
-    INSERT INTO USERS
-    VALUES(${username},${[password]})
+    console.log(req.body);
+    const data = await db.query(
+    `select * from users
+     where(username='${req.body.username}'and password='${[req.body.password]}');
     `);
-    console.log(data);
+    console.log(data.rows[0]);
+    console.log(data.rows);
+    if(data.rows[0]){
+        console.log('hi');
+        window.location.reload();
+        return next();
+    }
 }
 module.exports = test;
