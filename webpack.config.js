@@ -8,21 +8,21 @@ module.exports = {
   entry:'./src/index.js',
   output: {
     path: path.resolve(__dirname, 'build'),
-    publicPath: '/',
+    // publicPath: '/',
     filename: 'bundle.js',
   },
   mode: 'development',
   devServer: {
     host: 'localhost',
     port: 8080,
-    // static: {
-    //   directory: path.resolve(__dirname, 'build'),
-    // },
+    static: {
+      directory: path.resolve(__dirname, 'build'),
+    },
     hot: true,
     headers: { 'Access-Control-Allow-Origin': '*' },
     proxy:{
-      '/':{target:'http://localhost:3000',secure:false},
-      '/Login':{target:'http://localhost:3000',secure:false}
+      '/':{target:'http://localhost:3000/',secure:false},
+      '/Login/**':{target:'http://localhost:3000/',secure:false}
     }
   },
   module: {
