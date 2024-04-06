@@ -22,7 +22,15 @@ module.exports = {
     headers: { 'Access-Control-Allow-Origin': '*' },
     proxy:{
       '/':{target:'http://localhost:3000/',secure:false},
-      '/Login/**':{target:'http://localhost:3000/',secure:false}
+      '/Login/**':{target:'http://localhost:3000/',secure:false},
+      '/Kills':{target:'http://localhost:3000/',secure:false},
+      '/deaths':{target:'http://localhost:3000/',secure:false},
+      '/addKill':{target:'http://localhost:3000/',secure:false},
+      '/addDeath':{target:'http://localhost:3000/',secure:false},
+      '/gamesW':{target:'http://localhost:3000/',secure:false},
+      '/addGamesW':{target:'http://localhost:3000/',secure:false},
+      '/gamesL':{target:'http://localhost:3000/',secure:false},
+      '/addGamesL':{target:'http://localhost:3000/',secure:false},
     }
   },
   module: {
@@ -36,7 +44,12 @@ module.exports = {
             presets:['@babel/preset-env','@babel/react']
           }
         },
-      }
+      },
+      {
+        test: /.(css|scss)$/,
+        exclude: /node_modules/,
+        use: ['style-loader', 'css-loader']
+      },
     ],
   },
   plugins: [

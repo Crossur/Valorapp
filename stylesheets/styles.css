@@ -1,0 +1,132 @@
+html{
+    background-image:url("https://static.vecteezy.com/system/resources/previews/022/636/388/non_2x/valorant-logo-valorant-icon-transparent-free-png.png");
+    background-repeat:no-repeat;
+    background-position: 50%;
+    margin-top: 10%;
+    background-size: 40%;
+}
+@font-face {
+    font-family: "myFirstFont";
+    src: url("../fonts/Valorant\ Font.ttf");
+}
+#stats{
+    display:flex;
+}
+#kills{
+    font-family: 'myFirstFont';
+    background-color: lightblue;
+    font-size: 18;
+}
+#deaths{
+    font-family: 'myFirstFont';
+    background-color: lightblue;
+    font-size: 18;
+}
+#kd{
+    font-family: 'myFirstFont';
+    background-color: lightblue;
+    font-size: 18;
+}
+#roundsW{
+    font-family: 'myFirstFont';
+    background-color: lightblue;
+    font-size: 18;
+}
+#roundsL{
+    font-family: 'myFirstFont';
+    background-color: lightblue;
+    font-size: 18;
+}
+#wl{
+    font-family: 'myFirstFont';
+    background-color: lightblue;
+    font-size: 18;
+}
+#valoraid{
+    font-family: 'myFirstFont';
+    font-size: 90;
+    margin-top:29%;
+    margin-left:37%;
+}
+#play{
+    font-family: 'myFirstFont';
+    font-size:30;
+    margin-top:-25%;
+    margin-left:42%;
+    border-color: red;
+    border-width: 3px;
+}
+#text{
+    display:grid;
+    font-family:'myFirstFont';
+    font-size:40;
+    margin-top:-5%;
+    margin-left:29%;
+}
+/* #gKill{
+    font-family:'myFirstFont';
+} */
+#valoraid2{
+    font-family: 'myFirstFont';
+    font-size: 90;
+    margin-top:30%;
+    margin-left:37%;
+}
+#killA{
+    font-family: 'myFirstFont';
+    position:absolute;
+    font-size:25;
+    margin-left:20%
+}
+#killB{
+    font-family: 'myFirstFont';
+    font-size:25;
+}
+#killsR{
+    font-family: 'myFirstFont';
+    font-size:15;
+}
+#reasonsK{
+    font-size:15;
+}
+#killP{
+    font-size:17;
+}
+#killD{
+    font-family: 'myFirstFont';
+    margin-left:70%;
+    position: absolute;
+    top:235;
+    left:-160;
+    font-size:25;
+}
+#dButton{
+    font-family: 'myFirstFont';
+    font-size:25;
+}
+#deathsR{
+    font-family: 'myFirstFont';
+    font-size:15;
+}
+#reasonsD{
+    font-size:15;
+    position:relative;
+    left:60;
+}
+#killL{
+    font-size:17;
+}
+#buttonW{
+    font-family: 'myFirstFont';
+    position: absolute;
+    top:805;
+    left:200;
+    font-size:55;
+}
+#buttonL{
+    font-family: 'myFirstFont';
+    position: absolute;
+    top:800;
+    left:1300;
+    font-size:55;
+}
