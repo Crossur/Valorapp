@@ -1,8 +1,10 @@
 <html>
     <head>
-        <div>Login
-            <div>Username<input id="username"></input></div>
-            <div>Password <input id = 'password'></input></div>
+        <div style ="margin-top:20%; margin-left:42%;"id="hi">
+        <div style="margin-top:18%; margin-left: 10%;"> Login</div>
+        <br/>
+            <div>Username <input id="username"></input></div>
+            <div> Password &nbsp;<input id = 'password'></input></div><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 <button id = "button"  onclick="
                 async function hi(){
                     if(document.getElementById('username').value.trim() === '' || document.getElementById('password').value.trim() ===''){
@@ -20,7 +22,7 @@
                         if(data===true){
                             location.assign('/Home');
                         }else{
-                            if(confirm('Username/Password Incorrect press cancel to try again or confirm to continue to signup page' )===true){
+                            if(confirm('Username/Password Incorrect press ok to continue to signup page or cancel to try again' )===true){
                                 location.assign('/Signup');
                             }else{
                                 document.getElementById('username').value = '';
@@ -30,7 +32,7 @@
                     }
                 }
             hi()
-          "> Login
+          ">Login
                 </button> Or <button onclick="
                 location.assign('/Signup')"> Signup </button>
         </div>
