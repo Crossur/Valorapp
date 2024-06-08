@@ -6,6 +6,7 @@ const test = require('./test');
 const e = require('express');
 app.use(express.json());
 app.use(cookieParser());
+app.use(express.static(path.resolve(__dirname,'build')));
 app.get('/',(req,res)=>{
     if(req.cookies['signed in']=='true'){
        return res.redirect('/Home');
