@@ -52,7 +52,7 @@ const Home = (props) => {
                 <div id='roundsL'></div>
                 <div id='wl'></div>
             </div >
-            <div id ='valoraid'>VALORAID</div>
+            <div id ='valoraid'>VALORAIDwdawdawdawd</div>
             <button id='play'onClick={newGame}>Play new Gameawdawdadw</button>
         </div>
     )
