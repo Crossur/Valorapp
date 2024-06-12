@@ -52,8 +52,8 @@ const Home = (props) => {
                 <div id='roundsL'></div>
                 <div id='wl'></div>
             </div >
-            <div id ='valoraid'>VALORAIDwdawdawdawd</div>
-            <button id='play'onClick={newGame}>Play new Gamethisisnew</button>
+            <div id ='valoraid'>VALORAID</div>
+            <button id='play'onClick={newGame}>Play new Game</button>
         </div>
     )
 }
