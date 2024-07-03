@@ -1,2 +1,5 @@
 node_modules
 my-github-token
+.terraform
+terraform.tfstate
+package.json
