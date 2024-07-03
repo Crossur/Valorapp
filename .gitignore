@@ -2,7 +2,6 @@ node_modules
 my-github-token.txt
 .terraform
 terraform.tfstate
-package.json
 credentials.json
 .terraform.lock.hcl
 build

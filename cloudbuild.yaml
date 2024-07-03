@@ -3,15 +3,15 @@ options:
 
 steps:
   # Docker Build
-  - name: 'gcr.io/terraform-on-gcp-428202'
+  - name: 'gcr.io/terraform-on-gcp-428202/terraform/solo'
     args: ['build', '-t', 
-           'gcr.io/terraform-on-gcp-428202', 
+           'gcr.io/terraform-on-gcp-428202/terraform/solo', 
            '.']
 
   # Docker Push
-  - name: 'gcr.io/terraform-on-gcp-428202'
+  - name: 'gcr.io/terraform-on-gcp-428202/terraform/solo'
     args: ['push', 
-           'gcr.io/terraform-on-gcp-428202']
+           'gcr.io/terraform-on-gcp-428202/terraform/solo']
 
   # Entrypoint, timeout and environment variables
   - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
@@ -20,7 +20,7 @@ steps:
     args: ['compute', 'instances', 
            'create-with-container', 'my-vm-name',
            '--container-image', 
-           'gcr.io/terraform-on-gcp-428202']
+           'gcr.io/terraform-on-gcp-428202/terraform/solo']
     env:
       - 'CLOUDSDK_COMPUTE_REGION=us-central1'
       - 'CLOUDSDK_COMPUTE_ZONE=us-central1-a'
