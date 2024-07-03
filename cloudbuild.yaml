@@ -4,13 +4,13 @@ steps:
   # Docker Build
   - name: 'gcr.io/terraform-test/terraform'
     args: ['build', '-t', 
-           'us-central1-docker.pkg.dev/${terraform-on-gcp-428202}/my-docker-repo/myimage', 
+           'docker.io/crossur/solo:latest', 
            '.']
 
   # Docker Push
   - name: 'gcr.io/terraform-test/terraform'
     args: ['push', 
-           'us-central1-docker.pkg.dev/${terraform-on-gcp-428202}/my-docker-repo/myimage']
+           'docker.io/crossur/solo:latest']
 
   # Entrypoint, timeout and environment variables
   - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
