@@ -1,5 +1,6 @@
 node_modules
-my-github-token
+my-github-token.txt
 .terraform
 terraform.tfstate
 package.json
+credentials.json
