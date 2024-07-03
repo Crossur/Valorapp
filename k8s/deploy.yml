@@ -20,6 +20,6 @@ spec:
     spec:
       containers:
         - name: nodeappcontainer
-          image: gcr.io/harbor-master-test/github.com/crossur/solo-project
+          image: docker.io/crossur/solo:latest
           ports:
             - containerPort: 80
