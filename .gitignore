@@ -4,3 +4,5 @@ my-github-token.txt
 terraform.tfstate
 package.json
 credentials.json
+.terraform.lock.hcl
+build
