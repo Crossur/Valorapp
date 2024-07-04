@@ -1,4 +1,8 @@
 node_modules
-my-github-token
+my-github-token.txt
 .terraform
 terraform.tfstate
+credentials.json
+.terraform.lock.hcl
+build/bundle.js
+build/bundle.js.LICENSE.txt
