@@ -4,4 +4,5 @@ my-github-token.txt
 terraform.tfstate
 credentials.json
 .terraform.lock.hcl
-build
+build/bundle.js
+build/bundle.js.LICENSE.txt
