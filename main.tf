@@ -2,6 +2,7 @@ terraform {
   required_providers {
     google = {
       source  = "registry.terraform.io/hashicorp/google"
+      version = ">= 5.36.0"
     }
      kubectl = {
       source  = "gavinbunney/kubectl"
@@ -88,20 +89,51 @@ data "google_iam_policy" "p4sa-secretAccessor" {
 }
 
 resource "google_secret_manager_secret_iam_policy" "policy" {
-  project = google_secret_manager_secret.secret-basic.project
-  secret_id = google_secret_manager_secret.secret-basic.secret_id
-  policy_data = data.google_iam_policy.admin.policy_data
+  depends_on = [google_secret_manager_secret.github-token-secret,data.google_iam_policy.p4sa-secretAccessor]
+  project = google_secret_manager_secret.github-token-secret.project
+  secret_id = google_secret_manager_secret.github-token-secret.secret_id
+  policy_data = data.google_iam_policy.p4sa-secretAccessor.policy_data
 }
 
 resource "google_cloudbuildv2_connection" "my-connection" {
+  depends_on = [google_secret_manager_secret_iam_policy.policy]
   location = "us-central1"
   name = "my-connection"
   
   github_config {
+    app_installation_id = 51725755
     authorizer_credential {
       oauth_token_secret_version = google_secret_manager_secret_version.github-token-secret-version.id
     }
   }
+}
+
+resource "google_cloudbuildv2_repository" "my-repository" {
+  depends_on = [google_cloudbuildv2_connection.my-connection]
+  name = "solo-project"
+  location = "us-central1"
+  parent_connection = google_cloudbuildv2_connection.my-connection.name
+  remote_uri = "https://github.com/Crossur/Solo-Project.git"
+}
+
+resource "google_cloudbuild_trigger" "my-trigger" {
+  location = "us-central1"
+  name     = "my-trigger"
+  filename = "cloudbuild.yaml"
+  repository_event_config {
+    repository = google_cloudbuildv2_repository.my-repository.id
+    push {
+      branch = "^main$"
+    }
+  }
+  service_account = "projects/terraform-on-gcp-428202/serviceAccounts/terraform-sa@terraform-on-gcp-428202.iam.gserviceaccount.com"
+  # github {
+  #   owner = "crossur"
+  #   name  = "solo-project"
+  #   push {
+  #     branch = "^main$"
+  #   }
+  # }
 }
 
 provider "kubectl" {
