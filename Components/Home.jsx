@@ -53,7 +53,7 @@ const Home = (props) => {
                 <div id='wl'></div>
             </div >
             <div id ='valoraid'>VALORAID</div>
-            <button id='play'onClick={newGame}>Play new Gamethisisnew3</button>
+            <button id='play'onClick={newGame}>Play new Gamethisisnew4</button>
         </div>
     )
 }

@@ -12,15 +12,3 @@ steps:
   - name: 'gcr.io/cloud-builders/docker'
     args: ['push', 
            'gcr.io/terraform-on-gcp-428202/terraform/solo']
-
-  # Entrypoint, timeout and environment variables
-  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
-    entrypoint: 'gcloud'
-    timeout: 240s
-    args: ['compute', 'instances', 
-           'create-with-container', 'my-vm-name',
-           '--container-image', 
-           'gcr.io/terraform-on-gcp-428202/terraform/solo']
-    env:
-      - 'CLOUDSDK_COMPUTE_REGION=us-central1'
-      - 'CLOUDSDK_COMPUTE_ZONE=us-central1-a'
