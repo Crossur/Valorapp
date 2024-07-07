@@ -2,6 +2,7 @@ options:
   logging: CLOUD_LOGGING_ONLY
 
 serviceAccount: "projects/terraform-on-gcp-428202/serviceAccounts/terraform-sa@terraform-on-gcp-428202.iam.gserviceaccount.com"
+
 steps:
   # Docker Build
   - name: 'us.gcr.io/cloud-builders/docker'
@@ -12,4 +13,4 @@ steps:
   # Docker Push
   - name: 'us.gcr.io/cloud-builders/docker'
     args: ['push', 
-           'us.gcr.io/terraform-on-gcp-428202/terraform/solo']s
+           'us.gcr.io/terraform-on-gcp-428202/terraform/solo']
