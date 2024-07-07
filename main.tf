@@ -8,6 +8,10 @@ terraform {
       source  = "gavinbunney/kubectl"
       version = ">= 1.7.0"
     }
+     docker = {
+      source  = "kreuzwerker/docker"
+      version = "3.0.2"
+    }
   }
 }
 locals {
@@ -19,7 +23,6 @@ locals {
   ]
 }
 
-
 provider "google" {
   project="terraform-on-gcp-428202"
   credentials = file("credentials.json")
@@ -28,6 +31,28 @@ provider "google" {
 }
 
 data "google_client_config" "provider" {}
+
+provider "docker" {
+  host = "unix:///var/run/docker.sock"
+  registry_auth {
+    address  = "us.gcr.io"
+    username = "oauth2accesstoken"
+    password = data.google_client_config.provider.access_token
+  }
+}
+
+resource "docker_image" "image" {
+  name = "us.gcr.io/terraform-on-gcp-428202/terraform/solo:latest"
+  build {
+    context = "."
+  }
+}
+
+resource "docker_registry_image" "image" {
+  depends_on = [docker_image.image]
+  name       = docker_image.image.name
+  keep_remotely = true
+}
 
 resource "google_project_service" "enabled_service" {
   for_each = toset(local.services)
@@ -95,6 +120,13 @@ resource "google_secret_manager_secret_iam_policy" "policy" {
   policy_data = data.google_iam_policy.p4sa-secretAccessor.policy_data
 }
 
+resource "google_artifact_registry_repository" "artifact" {
+  depends_on = [google_project_service.enabled_service]
+  location      = "us"
+  repository_id = "us.gcr.io"
+  description   = "docker repository for app"
+  format        = "DOCKER"
+}
 resource "google_cloudbuildv2_connection" "my-connection" {
   depends_on = [google_secret_manager_secret_iam_policy.policy]
   location = "us-central1"
@@ -144,10 +176,12 @@ provider "kubectl" {
 }
 
 resource "kubectl_manifest" "deploy" {
+  depends_on = [docker_registry_image.image]
     yaml_body = file("k8s/deploy.yml")
 }
 
 resource "kubectl_manifest" "service" {
     yaml_body = file("k8s/service.yml")
 }
+
 

@@ -20,6 +20,6 @@ spec:
     spec:
       containers:
         - name: nodeappcontainer
-          image: docker.io/crossur/solo:latest
+          image: us.gcr.io/terraform-on-gcp-428202/terraform/solo:latest
           ports:
             - containerPort: 80
