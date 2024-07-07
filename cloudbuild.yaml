@@ -5,12 +5,12 @@ serviceAccount: "projects/terraform-on-gcp-428202/serviceAccounts/terraform-sa@t
 
 steps:
   # Docker Build
-  - name: 'us.gcr.io/cloud-builders/docker'
+  - name: 'gcr.io/cloud-builders/docker'
     args: ['build', '-t', 
            'us.gcr.io/terraform-on-gcp-428202/terraform/solo', 
            '.']
 
   # Docker Push
-  - name: 'us.gcr.io/cloud-builders/docker'
+  - name: 'gcr.io/cloud-builders/docker'
     args: ['push', 
            'us.gcr.io/terraform-on-gcp-428202/terraform/solo']
