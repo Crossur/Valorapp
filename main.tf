@@ -48,12 +48,6 @@ resource "docker_image" "image" {
   }
 }
 
-resource "docker_registry_image" "image" {
-  depends_on = [docker_image.image]
-  name       = docker_image.image.name
-  keep_remotely = true
-}
-
 resource "google_project_service" "enabled_service" {
   for_each = toset(local.services)
   project = "terraform-on-gcp-428202"
@@ -127,6 +121,13 @@ resource "google_artifact_registry_repository" "artifact" {
   description   = "docker repository for app"
   format        = "DOCKER"
 }
+
+resource "docker_registry_image" "image" {
+  depends_on = [docker_image.image,google_artifact_registry_repository.artifact]
+  name       = docker_image.image.name
+  keep_remotely = true
+}
+
 resource "google_cloudbuildv2_connection" "my-connection" {
   depends_on = [google_secret_manager_secret_iam_policy.policy]
   location = "us-central1"

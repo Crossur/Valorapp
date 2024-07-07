@@ -3,12 +3,12 @@ options:
 
 steps:
   # Docker Build
-  - name: 'gcr.io/cloud-builders/docker'
+  - name: 'us.gcr.io/cloud-builders/docker'
     args: ['build', '-t', 
-           'gcr.io/terraform-on-gcp-428202/terraform/solo', 
+           'us.gcr.io/terraform-on-gcp-428202/terraform/solo', 
            '.']
 
   # Docker Push
-  - name: 'gcr.io/cloud-builders/docker'
+  - name: 'us.gcr.io/cloud-builders/docker'
     args: ['push', 
-           'gcr.io/terraform-on-gcp-428202/terraform/solo']
+           'us.gcr.io/terraform-on-gcp-428202/terraform/solo']
