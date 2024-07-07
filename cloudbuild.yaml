@@ -6,11 +6,34 @@ serviceAccount: "projects/terraform-on-gcp-428202/serviceAccounts/terraform-sa@t
 steps:
   # Docker Build
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['build', '-t', 
-           'us.gcr.io/terraform-on-gcp-428202/terraform/solo', 
-           '.']
+    id: 'docker-build'
+    args:
+      - 'build'
+      - '-t'
+      - 'us.gcr.io/terraform-on-gcp-428202/github.com/crossur/solo-project'
+      - '.'
 
   # Docker Push
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['push', 
-           'us.gcr.io/terraform-on-gcp-428202/terraform/solo']
+    id: 'docker-push'
+    args:
+      - 'push'
+      - 'us.gcr.io/terraform-on-gcp-428202/github.com/crossur/solo-project'
+
+  # Prepare Deploy
+  - name: 'gcr.io/cloud-builders/gke-deploy'
+    id: 'prepare-deploy'
+    args:
+      - 'prepare'
+      - '--filename=k8s/'
+      - '--image=us.gcr.io/terraform-on-gcp-428202/github.com/crossur/solo-project:latest'
+
+  # Apply Deploy
+  - name: 'gcr.io/cloud-builders/gke-deploy'
+    id: 'apply-deploy'
+    args:
+      - 'apply'
+      - '--filename=output/expanded'
+      - '--cluster=primary'
+      - '--location=us-east1'
+      - '--namespace=default'
