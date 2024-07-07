@@ -1,6 +1,6 @@
 options:
   logging: CLOUD_LOGGING_ONLY
-
+  serviceAccount: "terraform-sa@terraform-on-gcp-428202.iam.gserviceaccount.com"
 steps:
   # Docker Build
   - name: 'us.gcr.io/cloud-builders/docker'
