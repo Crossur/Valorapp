@@ -11,6 +11,11 @@ spec:
     matchLabels:
       type: backend
       app: nodeapp
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
   template:
     metadata:
       name: nodeapppod
@@ -21,5 +26,6 @@ spec:
       containers:
         - name: nodeappcontainer
           image: us.gcr.io/terraform-on-gcp-428202/terraform/solo:latest
+          imagePullPolicy: Always
           ports:
             - containerPort: 80
