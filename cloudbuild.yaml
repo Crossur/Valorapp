@@ -10,7 +10,7 @@ steps:
     args:
       - 'build'
       - '-t'
-      - 'us.gcr.io/terraform-on-gcp-428202/github.com/crossur/solo-project'
+      - 'us.gcr.io/terraform-on-gcp-428202/terraform/solo:latest'
       - '.'
 
   # Docker Push
@@ -18,7 +18,7 @@ steps:
     id: 'docker-push'
     args:
       - 'push'
-      - 'us.gcr.io/terraform-on-gcp-428202/github.com/crossur/solo-project'
+      - 'us.gcr.io/terraform-on-gcp-428202/terraform/solo:latest'
 
   # Prepare Deploy
   - name: 'gcr.io/cloud-builders/gke-deploy'
@@ -26,7 +26,7 @@ steps:
     args:
       - 'prepare'
       - '--filename=k8s/'
-      - '--image=us.gcr.io/terraform-on-gcp-428202/github.com/crossur/solo-project:latest'
+      - '--image=us.gcr.io/terraform-on-gcp-428202/terraform/solo:latest'
 
   # Apply Deploy
   - name: 'gcr.io/cloud-builders/gke-deploy'

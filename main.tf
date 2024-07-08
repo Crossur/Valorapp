@@ -180,9 +180,8 @@ resource "kubectl_manifest" "deploy" {
   depends_on = [docker_registry_image.image]
     yaml_body = file("k8s/deploy.yml")
 }
-
 resource "kubectl_manifest" "service" {
+  depends_on = [docker_registry_image.image]
     yaml_body = file("k8s/service.yml")
 }
-
 

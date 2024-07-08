@@ -6,3 +6,4 @@ credentials.json
 .terraform.lock.hcl
 build/bundle.js
 build/bundle.js.LICENSE.txt
+.terraform.tfstate.*
