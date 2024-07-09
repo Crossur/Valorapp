@@ -23,11 +23,59 @@ locals {
   ]
 }
 
+variable "service_account_email" {
+  description = "email for service account you granted roles to"
+  type = string
+}
+
+variable "google_compute_zone" {
+  type    = string
+  description = "compute zone you want to use (example: us-central1)"
+}
+
+variable "google_compute_region" {
+  type    = string
+  description = "compute region you want to use (example: us-central1-a)"
+}
+
+variable "project_id" {
+  type = string
+  description = "google project id"
+}
+
+variable "project_number" {
+  type = string
+  description = "google project number"
+}
+
+variable "SA_credentials" {
+  type = string
+  description = "google service account credentials in json format ONE LINE"
+}
+
+variable "github_token" {
+  type = string
+  description = "your generated auth token for github"
+}
+
+variable "app_installation_id" {
+  type = string
+  description = "google cloud build installation id(found in url)"
+}
+
+variable "github_url" {
+  type = string
+  description = "github repo url"
+}
+
 provider "google" {
-  project="terraform-on-gcp-428202"
-  credentials = file("credentials.json")
-  region="us-east1"
-  zone = "us-east1-b"
+  project=var.project_id
+  credentials = <<-EOF
+  ${var.SA_credentials}
+EOF
+
+  region=var.google_compute_region
+  zone = var.google_compute_zone
 }
 
 data "google_client_config" "provider" {}
@@ -42,7 +90,7 @@ provider "docker" {
 }
 
 resource "docker_image" "image" {
-  name = "us.gcr.io/terraform-on-gcp-428202/terraform/solo:latest"
+  name = "us.gcr.io/${var.project_id}/terraform/solo:latest"
   build {
     context = "."
   }
@@ -50,14 +98,14 @@ resource "docker_image" "image" {
 
 resource "google_project_service" "enabled_service" {
   for_each = toset(local.services)
-  project = "terraform-on-gcp-428202"
+  project = var.project_id
   service = each.key
 }
 
 resource "google_container_cluster" "primary" {
   depends_on = [google_project_service.enabled_service]
   name     = "primary"
-  location = "us-east1"
+  location = var.google_compute_region
   # We can't create a cluster with no node pool defined, but we want to only use
   # separately managed node pools. So we create the smallest possible default
   # node pool and immediately delete it.
@@ -69,7 +117,7 @@ resource "google_container_cluster" "primary" {
 resource "google_container_node_pool" "primary_preemptible_nodes" {
   depends_on = [google_container_cluster.primary]
   name       = "my-node-pool"
-  location   = "us-east1"
+  location   = var.google_compute_region
   cluster    = google_container_cluster.primary.name
   node_count = 1
 
@@ -78,7 +126,7 @@ resource "google_container_node_pool" "primary_preemptible_nodes" {
     machine_type = "e2-medium"
 
     # Google recommends custom service accounts that have cloud-platform scope and permissions granted via IAM Roles.
-    service_account = "terraform-sa@terraform-on-gcp-428202.iam.gserviceaccount.com"
+    service_account = var.service_account_email
     oauth_scopes    = [
       "https://www.googleapis.com/auth/cloud-platform"
     ]
@@ -96,14 +144,14 @@ resource "google_secret_manager_secret" "github-token-secret" {
 resource "google_secret_manager_secret_version" "github-token-secret-version" {
   depends_on = [google_secret_manager_secret.github-token-secret]
   secret = google_secret_manager_secret.github-token-secret.id
-  secret_data = file("my-github-token.txt")
+  secret_data = var.github_token
 }
 
 data "google_iam_policy" "p4sa-secretAccessor" {
   binding {
     role = "roles/secretmanager.secretAccessor"
     // Here, 123456789 is the Google Cloud project number for the project that contains the connection.
-    members = ["serviceAccount:service-795992676862@gcp-sa-cloudbuild.iam.gserviceaccount.com"]
+    members = ["serviceAccount:service-${var.project_number}@gcp-sa-cloudbuild.iam.gserviceaccount.com"]
   }
 }
 
@@ -130,11 +178,11 @@ resource "docker_registry_image" "image" {
 
 resource "google_cloudbuildv2_connection" "my-connection" {
   depends_on = [google_secret_manager_secret_iam_policy.policy]
-  location = "us-central1"
+  location = var.google_compute_region
   name = "my-connection"
   
   github_config {
-    app_installation_id = 51725755
+    app_installation_id = var.app_installation_id
     authorizer_credential {
       oauth_token_secret_version = google_secret_manager_secret_version.github-token-secret-version.id
     }
@@ -144,13 +192,13 @@ resource "google_cloudbuildv2_connection" "my-connection" {
 resource "google_cloudbuildv2_repository" "my-repository" {
   depends_on = [google_cloudbuildv2_connection.my-connection]
   name = "solo-project"
-  location = "us-central1"
+  location = var.google_compute_region
   parent_connection = google_cloudbuildv2_connection.my-connection.name
-  remote_uri = "https://github.com/Crossur/Solo-Project.git"
+  remote_uri = var.github_url
 }
 
 resource "google_cloudbuild_trigger" "my-trigger" {
-  location = "us-central1"
+  location = var.google_compute_region
   name     = "my-trigger"
   filename = "cloudbuild.yaml"
   repository_event_config {
@@ -159,14 +207,7 @@ resource "google_cloudbuild_trigger" "my-trigger" {
       branch = "^main$"
     }
   }
-  service_account = "projects/terraform-on-gcp-428202/serviceAccounts/terraform-sa@terraform-on-gcp-428202.iam.gserviceaccount.com"
-  # github {
-  #   owner = "crossur"
-  #   name  = "solo-project"
-  #   push {
-  #     branch = "^main$"
-  #   }
-  # }
+  service_account = "projects/${var.project_id}/serviceAccounts/${var.service_account_email}"
 }
 
 provider "kubectl" {
