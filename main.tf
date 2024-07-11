@@ -223,7 +223,7 @@ resource "google_cloudbuild_trigger" "my-trigger" {
     step {
       name="gcr.io/cloud-builders/gke-deploy"
       id="prepare-deplo"
-      args=["prepare","--file=${kubectl_manifest.deploy.yaml_body}", "--image=us.gcr.io/${var.PROJECT_ID}/terraform/solo:latest"]
+      args=["prepare","--help"]
     }
     step {
       name="gcr.io/cloud-builders/gke-deploy"
