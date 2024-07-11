@@ -7,3 +7,4 @@ credentials.json
 build/bundle.js
 build/bundle.js.LICENSE.txt
 .terraform.tfstate.*
+.env

@@ -139,9 +139,10 @@ spec:
       name: nodeapppod
     spec:
       containers:
-        - image: us.gcr.io/terraform-on-gcp-428202/terraform/solo:latest
+        - image: us.gcr.io/${TF_VAR_PROJECT_ID}/terraform/solo:latest
           imagePullPolicy: Always
           name: nodeappcontainer
           ports:
             - containerPort: 80
               protocol: TCP
+              

@@ -1,7 +1,7 @@
 options:
   logging: CLOUD_LOGGING_ONLY
 
-serviceAccount: "projects/terraform-on-gcp-428202/serviceAccounts/terraform-sa@terraform-on-gcp-428202.iam.gserviceaccount.com"
+serviceAccount: "projects/" + '${TF_VAR_PROJECT_ID}' + "/serviceAccounts/" + '${TF_VAR_SA_EMAIL}'
 
 steps:
   # Docker Build
@@ -10,7 +10,7 @@ steps:
     args:
       - 'build'
       - '-t'
-      - 'us.gcr.io/terraform-on-gcp-428202/terraform/solo:latest'
+      - 'us.gcr.io/${TF_VAR_PROJECT_ID}/terraform/solo:latest'
       - '.'
 
   # Docker Push
@@ -18,7 +18,7 @@ steps:
     id: 'docker-push'
     args:
       - 'push'
-      - 'us.gcr.io/terraform-on-gcp-428202/terraform/solo:latest'
+      - 'us.gcr.io/${TF_VAR_PROJECT_ID}/terraform/solo:latest'
 
   # Prepare Deploy
   - name: 'gcr.io/cloud-builders/gke-deploy'
@@ -26,7 +26,7 @@ steps:
     args:
       - 'prepare'
       - '--filename=k8s/'
-      - '--image=us.gcr.io/terraform-on-gcp-428202/terraform/solo:latest'
+      - '--image=us.gcr.io/${TF_VAR_PROJECT_ID}/terraform/solo:latest'
 
   # Apply Deploy
   - name: 'gcr.io/cloud-builders/gke-deploy'
@@ -35,5 +35,5 @@ steps:
       - 'apply'
       - '--filename=output/expanded'
       - '--cluster=primary'
-      - '--location=us-east1'
+      - '--location=${TF_VAR_COMPUTE_REGION}'
       - '--namespace=default'
