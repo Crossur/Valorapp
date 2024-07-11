@@ -1,8 +1,6 @@
 options:
   logging: CLOUD_LOGGING_ONLY
 
-serviceAccount: "projects/" + '${TF_VAR_PROJECT_ID}' + "/serviceAccounts/" + '${TF_VAR_SA_EMAIL}'
-
 steps:
   # Docker Build
   - name: 'gcr.io/cloud-builders/docker'
@@ -10,7 +8,9 @@ steps:
     args:
       - 'build'
       - '-t'
-      - 'us.gcr.io/${TF_VAR_PROJECT_ID}/terraform/solo:latest'
+      - 'us.gcr.io/'
+      - '${TF_VAR_PROJECT_ID}'
+      - '/terraform/solo:latest'
       - '.'
 
   # Docker Push

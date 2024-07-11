@@ -223,12 +223,12 @@ resource "google_cloudbuild_trigger" "my-trigger" {
     step {
       name="gcr.io/cloud-builders/gke-deploy"
       id="prepare-deplo"
-      args=["prepare","--help"]
+      args=["prepare",kubectl_manifest.deploy,"--image=us.gcr.io/${var.PROJECT_ID}/terraform/solo:latest"]
     }
     step {
       name="gcr.io/cloud-builders/gke-deploy"
       id="apply-deploy"
-      args=["apply","--filename=output/expanded","--cluster=primary","--location=${var.COMPUTE_REGION}","--namespace=default"]
+      args=["apply",kubectl_manifest.deploy,"--cluster=primary","--location=${var.COMPUTE_REGION}","--namespace=default"]
     }
   }
   service_account = "projects/${var.PROJECT_ID}/serviceAccounts/${var.SA_EMAIL}"
