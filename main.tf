@@ -20,6 +20,7 @@ terraform {
 }
 locals {
   services = [
+    "cloudresourcemanager.googleapis.com",
     "cloudbuild.googleapis.com",
     "secretmanager.googleapis.com",
     "container.googleapis.com",
