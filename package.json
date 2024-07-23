@@ -6,7 +6,7 @@
   "private": true,
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js",
+    "start": "node dserver.js",
     "build": "webpack --config ./webpack.config.js",
     "devServer": "webpack server  --open",
     "dev": "npm run build & npm run devServer & npm run start"
