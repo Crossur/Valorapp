@@ -62,4 +62,15 @@ app.get('/gamesL',test.getGamesL,(req,res)=>{
 app.put('/addGameL',test.getGamesL,test.addGameL,(req,res)=>{
     return res.status(200).send([res.locals.gameslost+1]);
 })
+
+
+
+
+app.get('*',(req,res) => {
+    return res.sendFile(path.join(__dirname, 'build', 'index.html'));
+});
+
+
+
+
 app.listen(3000);
